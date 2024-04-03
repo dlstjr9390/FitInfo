@@ -1,2 +1,5 @@
-package com.FitInfo.FitInfo.glabal.jwt;public class JwtAuthenticationFilter {
+package com.FitInfo.FitInfo.glabal.jwt;
+
+public class JwtAuthenticationFilter {
+
 }
