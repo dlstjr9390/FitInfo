@@ -10,7 +10,10 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
@@ -43,7 +46,7 @@ public class JwtUtil {
 
   @PostConstruct
   public void init() {
-    byte[] bytes = Base64.getDecoder().decode();
+    byte[] bytes = Base64.getDecoder().decode(secretKey);
     key = Keys.hmacShaKeyFor(bytes);
   }
 
@@ -94,5 +97,23 @@ public class JwtUtil {
   public Claims getUserInfoFromToken(String token) {
 
     return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
+  }
+
+  // 추후 accessToken 검증 추가
+  public String getTokenFromRequest(HttpServletRequest req) {
+    Cookie[] cookies = req.getCookies();
+    if (cookies != null) {
+      for (Cookie cookie : cookies) {
+        try {
+
+          return URLDecoder.decode(cookie.getValue(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+
+          return null;
+        }
+      }
+    }
+
+    return null;
   }
 }
