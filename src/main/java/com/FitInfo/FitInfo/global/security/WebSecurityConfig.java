@@ -1,8 +1,8 @@
-package com.FitInfo.FitInfo.glabal.security;
+package com.FitInfo.FitInfo.global.security;
 
 import com.FitInfo.FitInfo.domain.user.UserDetailsServiceImpl;
-import com.FitInfo.FitInfo.glabal.jwt.JwtAuthenticationFilter;
-import com.FitInfo.FitInfo.glabal.jwt.JwtUtil;
+import com.FitInfo.FitInfo.global.jwt.JwtAuthenticationFilter;
+import com.FitInfo.FitInfo.global.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;

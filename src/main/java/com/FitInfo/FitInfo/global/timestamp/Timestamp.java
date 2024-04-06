@@ -1,4 +1,4 @@
-package com.FitInfo.FitInfo.glabal.timestamp;
+package com.FitInfo.FitInfo.global.timestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

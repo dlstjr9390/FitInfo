@@ -1,4 +1,4 @@
-package com.FitInfo.FitInfo.glabal.jwt;
+package com.FitInfo.FitInfo.global.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

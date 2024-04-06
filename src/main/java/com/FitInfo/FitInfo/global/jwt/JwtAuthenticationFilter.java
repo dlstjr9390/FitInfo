@@ -1,4 +1,4 @@
-package com.FitInfo.FitInfo.glabal.jwt;
+package com.FitInfo.FitInfo.global.jwt;
 
 import com.FitInfo.FitInfo.domain.user.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;

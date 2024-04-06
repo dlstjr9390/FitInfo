@@ -1,6 +1,6 @@
 package com.FitInfo.FitInfo.domain.user;
 
-import com.FitInfo.FitInfo.glabal.timestamp.Timestamp;
+import com.FitInfo.FitInfo.global.timestamp.Timestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
