@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -30,4 +31,12 @@ public class User extends Timestamp {
 
   @Column(nullable = false)
   private boolean isActive;
+
+  public User(SignupRequestDto signupRequestDto, String password) {
+    this.username = signupRequestDto.username();
+    this.password = password;
+    this.region = signupRequestDto.region();
+    this.email = signupRequestDto.email();
+    this.isActive = true;
+  }
 }
