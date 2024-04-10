@@ -1,5 +1,7 @@
 package com.FitInfo.FitInfo.domain.user;
 
+import com.FitInfo.FitInfo.global.exception.BisException;
+import com.FitInfo.FitInfo.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -10,8 +12,15 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
+  private final UserRepository userRepository;
+
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return null;
+
+    User user = userRepository.findByUsername(username).orElseThrow(
+        () -> new BisException(ErrorCode.NOT_FOUND_USER)
+    );
+
+    return new UserDetailsImpl(user);
   }
 }
