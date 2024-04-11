@@ -34,11 +34,33 @@ public class User extends Timestamp {
   @Column(nullable = false)
   private boolean isActive;
 
+  @Column(nullable = false)
+  private String role;
+
+  @Column
+  private Long kakaoId;
+
   public User(SignupRequestDto signupRequestDto, String password) {
+
     this.username = signupRequestDto.username();
     this.password = password;
     this.region = signupRequestDto.region();
     this.email = signupRequestDto.email();
     this.isActive = true;
+    this.role = "User";
   }
+
+  public User(String username, String password, String email, Long kakaoId) {
+
+    this.username = username;
+    this.password = password;
+    this.email = email;
+    this.kakaoId = kakaoId;
+  }
+
+  public User kakaoIdUpdate(Long kakaoId) {
+    this.kakaoId = kakaoId;
+    return this;
+  }
+
 }
