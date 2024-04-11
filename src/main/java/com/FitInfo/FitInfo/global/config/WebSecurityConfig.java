@@ -1,4 +1,4 @@
-package com.FitInfo.FitInfo.global.security;
+package com.FitInfo.FitInfo.global.config;
 
 import com.FitInfo.FitInfo.domain.user.UserDetailsServiceImpl;
 import com.FitInfo.FitInfo.global.jwt.JwtAuthenticationFilter;
