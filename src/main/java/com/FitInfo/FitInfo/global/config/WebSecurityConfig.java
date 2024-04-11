@@ -49,6 +49,7 @@ public class WebSecurityConfig {
             .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
             .requestMatchers(HttpMethod.POST,("/api/user/signup")).permitAll()
             .requestMatchers(HttpMethod.GET,("/api/user/login")).permitAll()
+            .requestMatchers(HttpMethod.GET,("/api/user/signup-page")).permitAll()
             .anyRequest().authenticated()
         );
 
