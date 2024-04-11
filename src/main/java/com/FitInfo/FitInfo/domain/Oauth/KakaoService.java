@@ -42,7 +42,7 @@ public class KakaoService {
 
     User kakaoUser = registerKakaoUserIfNeeded(kaKaoUserInfoDto);
 
-    String createdToken = jwtUtil.createAccessToken(kakaoUser.getUsername(), kakaoUser.getRole());
+    String createdToken = jwtUtil.createAccessToken(kakaoUser.getUsername());
 
     return createdToken;
   }
