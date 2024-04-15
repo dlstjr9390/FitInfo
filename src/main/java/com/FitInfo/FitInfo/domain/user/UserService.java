@@ -6,6 +6,7 @@ import com.FitInfo.FitInfo.global.jwt.JwtUtil;
 import com.FitInfo.FitInfo.global.response.CommonResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +51,14 @@ public class UserService {
 
   }
 
+  public UserResponseDto getProfile(Long userId) {
+    User user = userRepository.findById(userId).orElseThrow(
+        () -> new BisException(ErrorCode.NOT_FOUND_USER)
+    );
+
+    return UserResponseDto.createUserResponseDto(user);
+  }
+
   public void checkConflictEmail(String email) {
 
     if(userRepository.existsUserByEmail(email)){
@@ -65,5 +74,6 @@ public class UserService {
       throw new BisException(ErrorCode.EXIST_USERNAME);
     }
   }
+
 
 }

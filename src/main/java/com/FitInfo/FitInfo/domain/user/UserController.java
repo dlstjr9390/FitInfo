@@ -1,12 +1,11 @@
 package com.FitInfo.FitInfo.domain.user;
 
 import com.FitInfo.FitInfo.global.jwt.JwtUtil;
-import io.jsonwebtoken.Jwt;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,4 +35,13 @@ public class UserController {
 
     return "로그인 완료";
   }
+
+  @GetMapping("/{userId}")
+  public UserResponseDto getProfile(
+      @PathVariable Long userId
+  ) {
+
+    return userService.getProfile(userId);
+  }
+
 }
