@@ -1,9 +1,12 @@
 package com.FitInfo.FitInfo.domain.user;
 
 import com.FitInfo.FitInfo.global.jwt.JwtUtil;
+import com.FitInfo.FitInfo.global.response.CommonResponse;
+import com.FitInfo.FitInfo.global.response.ResponseCode;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,27 +24,35 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping("/signup")
-  public String signup(@RequestBody @Valid SignupRequestDto signupRequestDto) {
+  public ResponseEntity<CommonResponse<String>> signup(@RequestBody @Valid SignupRequestDto signupRequestDto) {
 
     userService.signup(signupRequestDto);
 
-    return "회원가입 완료";
+    return ResponseEntity
+        .status(ResponseCode.SIGNUP.getHttpStatus())
+        .body(CommonResponse.of(ResponseCode.SIGNUP, ""));
   }
 
   @GetMapping("/login")
-  public String login(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpServletResponse res) {
+  public ResponseEntity<CommonResponse<String>> login(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpServletResponse res) {
 
     userService.login(loginRequestDto, res);
 
-    return "로그인 완료";
+    return ResponseEntity
+        .status(ResponseCode.LOGIN.getHttpStatus())
+        .body(CommonResponse.of(ResponseCode.LOGIN, ""));
   }
 
   @GetMapping("/{userId}")
-  public UserResponseDto getProfile(
+  public ResponseEntity<CommonResponse<UserResponseDto>> getProfile(
       @PathVariable Long userId
   ) {
 
-    return userService.getProfile(userId);
+    UserResponseDto userResponseDto = userService.getProfile(userId);
+
+    return ResponseEntity
+        .status(ResponseCode.GET_PROFILE.getHttpStatus())
+        .body(CommonResponse.of(ResponseCode.GET_PROFILE, userResponseDto));
   }
 
 }
