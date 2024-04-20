@@ -1,5 +1,6 @@
 package com.FitInfo.FitInfo.domain.user;
 
+import com.FitInfo.FitInfo.global.jwt.AuthUser;
 import com.FitInfo.FitInfo.global.jwt.JwtUtil;
 import com.FitInfo.FitInfo.global.response.CommonResponse;
 import com.FitInfo.FitInfo.global.response.ResponseCode;
@@ -7,7 +8,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,14 +48,42 @@ public class UserController {
 
   @GetMapping("/{userId}")
   public ResponseEntity<CommonResponse<UserResponseDto>> getProfile(
-      @PathVariable Long userId
+      @PathVariable Long userId,
+      @AuthUser User user
   ) {
 
-    UserResponseDto userResponseDto = userService.getProfile(userId);
+    UserResponseDto userResponseDto = userService.getProfile(userId, user);
 
     return ResponseEntity
         .status(ResponseCode.GET_PROFILE.getHttpStatus())
         .body(CommonResponse.of(ResponseCode.GET_PROFILE, userResponseDto));
+  }
+
+  @PatchMapping("/{userId}")
+  public ResponseEntity<CommonResponse<String>> updateUser(
+      @PathVariable Long userId,
+      UpdatedUserResponseDto updatedUserResponseDto,
+      @AuthUser User user
+  ) {
+
+    userService.updateUser(userId, updatedUserResponseDto, user);
+
+    return ResponseEntity
+        .status(ResponseCode.OK.getHttpStatus())
+        .body(CommonResponse.of(ResponseCode.OK, ""));
+  }
+
+  @DeleteMapping("/{userId}")
+  public ResponseEntity<CommonResponse<String>> deleteUser(
+      @PathVariable Long userId,
+      @AuthUser User user
+  ) {
+
+    userService.deleteUser(userId, user);
+
+    return ResponseEntity
+        .status(ResponseCode.OK.getHttpStatus())
+        .body(CommonResponse.of(ResponseCode.OK, ""));
   }
 
 }

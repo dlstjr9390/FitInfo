@@ -59,8 +59,21 @@ public class User extends Timestamp {
   }
 
   public User kakaoIdUpdate(Long kakaoId) {
+
     this.kakaoId = kakaoId;
+
     return this;
   }
 
+  public void inActiveUser() {
+
+    this.isActive = false;
+  }
+
+  public void updateUser(UpdatedUserResponseDto updatedUserResponseDto) {
+
+    this.email = updatedUserResponseDto.Email();
+    this.password = updatedUserResponseDto.password();
+    this.region = updatedUserResponseDto.region();
+  }
 }

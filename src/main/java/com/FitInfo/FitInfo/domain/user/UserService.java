@@ -46,17 +46,53 @@ public class UserService {
 
     }
 
+    if(!user.isActive()){
+
+      throw new BisException(ErrorCode.DELETED_USER);
+    }
+
     String token = jwtUtil.createAccessToken(loginRequestDto.username());
     jwtUtil.addJwtToCookie("accessToken", token, res);
 
   }
 
-  public UserResponseDto getProfile(Long userId) {
-    User user = userRepository.findById(userId).orElseThrow(
-        () -> new BisException(ErrorCode.NOT_FOUND_USER)
-    );
+  public UserResponseDto getProfile(Long userId, User loginedUser) {
+
+    User user = getUser(userId);
+
+    if(user.getId() != loginedUser.getId()){
+      throw new BisException(ErrorCode.YOUR_NOT_COME_IN);
+    }
 
     return UserResponseDto.createUserResponseDto(user);
+  }
+
+  @Transactional
+  public void updateUser(
+      Long userId,
+      UpdatedUserResponseDto updatedUserResponseDto,
+      User loginedUser
+  ) {
+
+    User user = getUser(userId);
+
+    if(user.getId() != loginedUser.getId()){
+      throw new BisException(ErrorCode.YOUR_NOT_COME_IN);
+    }
+
+    user.updateUser(updatedUserResponseDto);
+  }
+
+  @Transactional
+  public void deleteUser(Long userId, User loginedUser) {
+
+    User user = getUser(userId);
+
+    if(user.getId() != loginedUser.getId()){
+      throw new BisException(ErrorCode.YOUR_NOT_COME_IN);
+    }
+
+    user.inActiveUser();
   }
 
   public void checkConflictEmail(String email) {
@@ -73,6 +109,15 @@ public class UserService {
 
       throw new BisException(ErrorCode.EXIST_USERNAME);
     }
+  }
+
+  public User getUser(Long userId) {
+
+    User user = userRepository.findById(userId).orElseThrow(
+        () -> new BisException(ErrorCode.NOT_FOUND_USER)
+    );
+
+    return user;
   }
 
 
